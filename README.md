@@ -1,29 +1,6 @@
-# quizzer
+# Quizzer
+A simple Quiz App for learning.
 
-## Project setup
-```
-npm install
-```
+⚠️**IMPORTANT**⚠️
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+I have made this in a hurry. It's minimal. It's not very pretty. And I can't guarantee that it'll work. So use at your own risk.

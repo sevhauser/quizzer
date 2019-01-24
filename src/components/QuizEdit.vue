@@ -1,49 +1,68 @@
 <template>
-  <v-dialog 
-    v-model="visible"
-    max-width="600px">
-    <v-btn
-      slot="activator"
-      fab
-      bottom
-      right
-      fixed
-      color="green"
-      @click="show">
-      <v-icon>add</v-icon>
-    </v-btn>
-    <form>
-    </form>
+  <v-dialog
+    :value="visible"
+    max-width="600px"
+    persistent>
+    <v-card>
+      <v-card-title>
+        <span class="headline">Edit Quiz</span>
+      </v-card-title>
+      <v-card-text>
+        <form>
+          <v-text-field
+            v-model="input.name"
+            label="Quiz Title"
+            required></v-text-field>
+          <v-textarea
+            v-model="input.description"
+            label="Description"
+            rows="1"
+            auto-grow></v-textarea>
+        </form>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn flat @click="close">Cancel</v-btn>
+        <v-btn flat @click="save">Save</v-btn>
+      </v-card-actions>
+    </v-card>
   </v-dialog>
 </template>
 
 <script>
 export default {
-  name: 'QuizEdit',
+  name: 'QuizCreate',
   data: () => ({
-    title: '',
-    description: '',
-    visible: false,
+    input: {
+      name: '',
+      description: '',
+    },
   }),
   props: {
-    controller: Object,
-    id: {
-      type: String,
-      default: '',
+    name: String,
+    description: String,
+    visible: Boolean,
+  },
+  watch: {
+    name(newVal) {
+      this.input.name = newVal;
     },
-    create: {
-      type: Boolean,
-      default: true,
+    description(newVal) {
+      this.input.description = newVal;
+    },
+    visible(newVal) {
+      if (newVal) {
+        this.input.name = this.name;
+        this.input.description = this.description;
+      }
     },
   },
   methods: {
-    show() {
-      this.reset();
-      this.visible = true;
+    save() {
+      this.$emit('save', this.input);
     },
-    reset() {
-      this.title = '';
-      this.description = '';
+    close() {
+      this.$emit('close');
     },
   },
 };

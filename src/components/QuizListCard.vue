@@ -1,21 +1,24 @@
 <template>
-  <v-card>
-    <v-card-title primary-title>
-      <div>
-        <h3 class="headline mb-0">{{ title }}</h3>
-        <span>{{ description }}</span>
-      </div>
-    </v-card-title>
-  </v-card>
+  <v-flex xs12>
+    <v-card @click="$emit('click')">
+      <v-card-title primary-title>
+        <div>
+          <h3 class="headline mb-0">{{ quiz.name }}</h3>
+          <span>{{ quiz.description }}</span>
+        </div>
+      </v-card-title>
+    </v-card>
+  </v-flex>
 </template>
 
 <script>
 export default {
   name: 'QuizListCard',
   props: {
-    id: String,
-    title: String,
-    description: String,
+    quiz: {
+      type: Object,
+      required: true,
+    },
   },
 };
 </script>

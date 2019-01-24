@@ -1,36 +1,55 @@
 <template>
   <v-content>
+    <v-toolbar app>
+      <v-toolbar-title>QUIZZER</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <QuizImporter
+        :controller="controller"></QuizImporter>
+    </v-toolbar>
     <v-container
       fluid
       grid-list-lg
       v-if="loaded">
-      <v-layout row wrap>
         <v-flex>
+          <v-card
+            color="red"
+            class="mb-2">
+            <v-card-title>
+              <v-icon color="white">warning</v-icon>
+              <span class="ml-1 font-weight-bold">IMPORTANT: </span><span>This app is minimal and dirty. I do not guarantee anything.</span>
+            </v-card-title>
+          </v-card>
           <QuizListCard
+            class="mb-2"
             v-for="quiz in controller.quizzes"
             :key="quiz.id"
-            :title="quiz.title"
-            :description="quiz.description"/>
+            :quiz="quiz"
+            @click="loadQuiz(quiz.id)"/>
         </v-flex>
-      </v-layout>
     </v-container>
-    <QuizEdit
+    <QuizCreate
       :controller="controller"/>
   </v-content>
 </template>
 
 <script>
-import { QuizzesController } from '@/controllers';
+import { quizControl } from '@/controllers';
 import QuizListCard from '@/components/QuizListCard.vue';
-import QuizEdit from '@/components/QuizEdit.vue';
+import QuizCreate from '@/components/QuizCreate.vue';
+import QuizImporter from '@/components/QuizImporter.vue';
 
 export default {
   name: 'Home',
   data: () => ({
     loaded: false,
-    controller: new QuizzesController(),
+    controller: quizControl,
     showCreate: false,
   }),
+  methods: {
+    loadQuiz(id) {
+      this.$router.push(`/quiz/${id}`);
+    }
+  },
   created() {
     this.controller.load().then(() => {
       this.loaded = true;
@@ -38,7 +57,8 @@ export default {
   },
   components: {
     QuizListCard,
-    QuizEdit,
+    QuizCreate,
+    QuizImporter,
   },
 }
 </script>
